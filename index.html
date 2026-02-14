@@ -3,32 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🐍 ONI CLUB | 官方腳本分發系統</title>
+    <title>🐍 ONI CLUB | OFFICIAL GATE</title>
     <style>
-        :root { --primary: #ff2a2a; --beta: #00ccff; --bg: #050505; }
-        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .container { width: 95%; max-width: 800px; background: rgba(15,15,15,0.95); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
-        h1 { font-size: 3.5rem; margin: 0; letter-spacing: -2px; }
-        h1 span { color: var(--primary); text-shadow: 0 0 15px rgba(255,42,42,0.5); }
-        .tagline { color: #666; margin-bottom: 40px; letter-spacing: 2px; }
+        :root { --primary: #ff2a2a; --beta: #00e1ff; --bg: #080808; }
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         
-        .choice-section { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
-        .card { background: rgba(255,255,255,0.02); padding: 25px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; position: relative; overflow: hidden; }
-        .card:hover { border-color: var(--primary); transform: translateY(-5px); background: rgba(255,255,255,0.05); }
+        .header { text-align: center; margin-bottom: 50px; }
+        .header h1 { font-size: 4rem; margin: 0; letter-spacing: -2px; }
+        .header h1 span { color: var(--primary); text-shadow: 0 0 20px rgba(255,42,42,0.6); }
         
-        h3 { margin-top: 0; font-size: 1.5rem; }
-        .stable-text { color: var(--primary); }
-        .beta-text { color: var(--beta); }
+        /* 雙版本並排容器 */
+        .version-container { display: flex; gap: 40px; width: 90%; max-width: 1000px; flex-wrap: wrap; justify-content: center; }
         
-        .feature-list { text-align: left; font-size: 0.85rem; color: #aaa; margin: 15px 0; padding: 0; list-style: none; }
-        .feature-list li { margin-bottom: 5px; }
-        .feature-list li::before { content: "•"; color: var(--primary); margin-right: 8px; }
+        .box { flex: 1; min-width: 300px; background: rgba(20,20,20,0.8); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 40px; text-align: center; transition: 0.4s; position: relative; }
+        
+        /* 正式版樣式 */
+        .box.stable { border-top: 5px solid var(--primary); }
+        .box.stable:hover { box-shadow: 0 10px 40px rgba(255,42,42,0.2); transform: translateY(-10px); }
+        
+        /* Beta 版樣式 */
+        .box.beta { border-top: 5px solid var(--beta); }
+        .box.beta:hover { box-shadow: 0 10px 40px rgba(0,225,255,0.2); transform: translateY(-10px); }
 
-        .btn { width: 100%; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; margin-top: 10px; font-size: 1rem; }
-        .btn-stable { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(255,42,42,0.3); }
-        .btn-beta { background: var(--beta); color: white; box-shadow: 0 5px 15px rgba(0,204,255,0.3); }
+        h2 { font-size: 2rem; margin-bottom: 20px; }
+        .version-tag { font-size: 1rem; padding: 5px 15px; border-radius: 20px; background: rgba(255,255,255,0.1); display: inline-block; margin-bottom: 20px; }
         
-        #toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 10; left: 50%; bottom: 30px; transform: translateX(-50%); }
-        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
-        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
-        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0
+        .features { text-align: left; margin: 30px 0; min-height: 120px; }
+        .features div { margin-bottom: 10px; color: #bbb; font-size: 0.9rem; }
+        .features div::before { content: "✔"; margin-right: 10px; color: var(--primary); }
+        .beta .features div::before { color: var(--beta); }
+
+        .copy-btn { width: 100%; padding: 20px; border: none; border-radius: 12px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s; color: white; }
+        .btn-stable { background: var(--primary); box-shadow: 0 5px 15px rgba(255,42,42,0.3); }
+        .btn-beta { background: var(--beta); box-shadow: 0 5px 15px rgba(0,225,255,0.3); }
+
+        .copy-btn:hover { opacity: 0.8; letter-spacing: 1px; }
+
+        /* 提示彈窗 */
+        #toast { visibility: hidden; background: #333; color: white; padding: 16px 30px; position: fixed; bottom: 30px; border-radius: 50px; font-weight: bold; z-index: 100; }
+        #toast.show { visibility: visible; animation: fadeInOut 2.5s; }
+        @keyframes fadeInOut { 0% { opacity:0; bottom:0; } 20% { opacity:1; bottom:30px; } 80% { opacity:1; bottom:30px; } 100% { opacity:0; bottom:0; } }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>ONI CLUB <span>HUB</span></h1>
+        <p style="color: #666; letter-spacing: 4px;">SELECT YOUR VERSION</p>
+    </div>
+
+    <div class="version-container">
+        <div class="box stable">
+            <div class="version-tag">STABLE</div>
+            <h2 style="color: var(--primary);">Official v2.0</h2>
+            <div class="features">
+                <div>極致穩定的開發架構</div>
+                <div>經典 Z3US 介面系統</div>
+                <div>全功能戰鬥/視覺模組</div>
+            </div>
+            <button class="copy-btn btn-stable" onclick="copyCode('official')">📋 COPY OFFICIAL</button>
+        </div>
+
+        <div class="box beta">
+            <div class="version-tag">EXPERIMENTAL</div>
+            <h2 style="color: var(--beta);">Beta v15.3</h2>
+            <div class="features">
+                <div>E + Click Teleport (帶獨立開關)</div>
+                <div>物理級 Velocity 無限跳躍</div>
+                <div>最新反作弊偵測繞過優化</div>
+            </div>
+            <button class="copy-btn btn-beta" onclick="copyCode('beta')">🚀 COPY BETA</button>
+        </div>
+    </div>
+
+    <div id="toast">✅ 腳本已複製，請在遊戲中執行！</div>
+
+    <script>
+        function copyCode(type) {
+            let code = "";
+            if (type === 'official') {
+                // 這是你給的 v2.0 連結
+                code = 'loadstring(game:HttpGet("https://pastebin.com/raw/Meh2q7g9"))()';
+            } else {
+                // 這是你給的 v15.3 Beta 連結
+                code = 'loadstring(game:HttpGet("https://pastebin.com/raw/KYaGkTXp"))()';
+            }
+
+            const el = document.createElement('textarea');
+            el.value = code;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(() => { toast.className = ""; }, 2500);
+        }
+    </script>
+</body>
+</html>
