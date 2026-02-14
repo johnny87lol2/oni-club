@@ -47,6 +47,13 @@
         }
         .card:hover { border-color: var(--primary); transform: translateY(-5px); }
 
+        .suggestion-banner {
+            width: 90%; max-width: 1000px; 
+            background: linear-gradient(90deg, rgba(255,42,42,0.15), transparent);
+            border: 1px solid var(--border); border-radius: 20px; padding: 30px;
+            margin-bottom: 60px; display: flex; align-items: center; justify-content: space-between;
+        }
+
         .injector-section { width: 90%; max-width: 1000px; margin-bottom: 80px; }
         .injector-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         
@@ -56,16 +63,17 @@
         }
         .inj-card:hover { background: rgba(255,255,255,0.06); }
 
-        .inj-tag { font-size: 0.7rem; padding: 3px 8px; border-radius: 5px; margin-bottom: 10px; display: inline-block; }
-        .tag-safe { background: rgba(0,255,0,0.1); color: #00ff00; }
-        .tag-risk { background: rgba(255,165,0,0.1); color: #ffa500; }
-
         .btn-main {
             width: 100%; padding: 15px; border: none; border-radius: 10px;
             background: var(--primary); color: white; font-weight: bold; cursor: pointer; margin-top: 15px;
-            transition: 0.3s;
         }
-        .btn-main:hover { opacity: 0.8; }
+
+        .btn-outline {
+            padding: 12px 25px; border: 1px solid var(--primary); background: transparent;
+            color: var(--primary); border-radius: 10px; cursor: pointer; font-weight: bold;
+            text-decoration: none; transition: 0.3s;
+        }
+        .btn-outline:hover { background: var(--primary); color: white; }
 
         .btn-download {
             display: block; text-align: center; padding: 10px; background: #222;
@@ -91,14 +99,14 @@
         <div class="nav-links">
             <a href="#">首頁</a>
             <a href="#injectors">注入器推薦</a>
-            <a href="https://forms.gle/vPshU9qDsmW1A6tV9" target="_blank">推薦功能</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSctyDqRANgLvEaop0jQC62SozTvUx2ko8znngPPZKFzuXOfFA/viewform?usp=sf_link" target="_blank">推薦功能</a>
         </div>
-        <a href="https://forms.gle/vPshU9qDsmW1A6tV9" target="_blank" style="background:var(--primary); color:white; padding:8px 18px; border-radius:8px; text-decoration:none; font-weight:bold;">立即投稿</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSctyDqRANgLvEaop0jQC62SozTvUx2ko8znngPPZKFzuXOfFA/viewform?usp=sf_link" target="_blank" style="background:var(--primary); color:white; padding:8px 18px; border-radius:8px; text-decoration:none; font-weight:bold;">立即投稿</a>
     </nav>
 
     <header>
         <h1>ONI <span>HUB</span></h1>
-        <p style="color: #666;">Elite Scripts for Roblox Elite</p>
+        <p style="color: #666;">Elite Scripts for Roblox Elite Players</p>
     </header>
 
     <div class="container">
@@ -115,31 +123,31 @@
         </div>
     </div>
 
+    <div class="suggestion-banner">
+        <div>
+            <h2 style="margin:0;">想要新功能？</h2>
+            <p style="color:#888; margin: 5px 0 0 0;">填寫表單告訴我們你的建議。</p>
+        </div>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSctyDqRANgLvEaop0jQC62SozTvUx2ko8znngPPZKFzuXOfFA/viewform?usp=sf_link" target="_blank" class="btn-outline">填寫表單</a>
+    </div>
+
     <div class="injector-section" id="injectors">
         <h2 style="border-left: 4px solid var(--primary); padding-left: 15px; margin-bottom: 30px;">推薦執行器 (Executors)</h2>
         <div class="injector-grid">
             <div class="inj-card">
-                <span class="inj-tag tag-safe">目前最穩</span>
                 <h4 style="margin:5px 0;">Solara</h4>
-                <p style="font-size:0.8rem; color:#888;">Windows 端免費首選，更新速度極快。</p>
+                <p style="font-size:0.8rem; color:#888;">目前最穩定的免費首選。</p>
                 <a href="https://discord.gg/realsolara" target="_blank" class="btn-download">前往 Discord</a>
             </div>
             <div class="inj-card">
-                <span class="inj-tag tag-safe">輕量簡潔</span>
                 <h4 style="margin:5px 0;">Celery</h4>
-                <p style="font-size:0.8rem; color:#888;">介面乾淨，適合不喜歡複雜設定的玩家。</p>
+                <p style="font-size:0.8rem; color:#888;">輕量簡潔，更新迅速。</p>
                 <a href="https://discord.gg/celery" target="_blank" class="btn-download">前往 Discord</a>
-            </div>
-            <div class="inj-card">
-                <span class="inj-tag tag-risk">功能強大</span>
-                <h4 style="margin:5px 0;">Wave</h4>
-                <p style="font-size:0.8rem; color:#888;">支援更多高級 Lua 函數，但請注意偵測風險。</p>
-                <a href="https://getwave.gg/" target="_blank" class="btn-download">訪問官網</a>
             </div>
         </div>
     </div>
 
-    <footer>© 2026 ONI CLUB | Always use alt accounts to stay safe.</footer>
+    <footer>© 2026 ONI CLUB | The Future of Scripting.</footer>
 
     <div id="toast">✅ 腳本已複製！</div>
 
