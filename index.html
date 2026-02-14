@@ -3,51 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ONI CLUB | ELITE UTILITY</title>
+    <title>ONI CLUB | ELITE HUB</title>
     <style>
         :root {
             --primary: #ff2a2a;
+            --beta: #00e1ff;
             --glass: rgba(255, 255, 255, 0.02);
             --border: rgba(255, 255, 255, 0.08);
-            --beta-color: #00e1ff;
         }
 
         body {
             margin: 0; padding: 0;
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: #050505; color: white;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at top, #1a0505, #050505); color: white;
             display: flex; flex-direction: column; align-items: center; min-height: 100vh;
-            overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        /* 導航欄 */
         nav {
             width: 100%; padding: 15px 0; border-bottom: 1px solid var(--border);
             backdrop-filter: blur(15px); position: fixed; top: 0; z-index: 1000;
             display: flex; justify-content: space-around; align-items: center;
-            background: rgba(5, 5, 5, 0.8);
         }
 
-        .logo { font-weight: 900; letter-spacing: 1px; font-size: 1.2rem; }
+        .logo { font-weight: 900; letter-spacing: 1px; }
         .logo span { color: var(--primary); }
-
         .nav-links a { color: #888; text-decoration: none; margin: 0 15px; font-size: 0.9rem; transition: 0.3s; }
         .nav-links a:hover { color: var(--primary); }
 
-        .btn-nav {
-            background: var(--primary); color: white; padding: 8px 18px;
-            border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.85rem;
-            transition: 0.3s;
-        }
-        .btn-nav:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(255, 42, 42, 0.4); }
-
-        /* 主標題 */
         header { text-align: center; margin-top: 150px; }
-        header h1 { font-size: 4.5rem; margin: 0; letter-spacing: -3px; font-weight: 900; }
+        header h1 { font-size: 4.5rem; margin: 0; letter-spacing: -2px; }
         header h1 span { color: var(--primary); }
-        header p { color: #555; font-size: 1.1rem; margin-top: 10px; }
 
-        /* 卡片容器 */
         .container {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 25px; width: 90%; max-width: 1000px; margin: 60px 0;
@@ -55,42 +42,42 @@
 
         .card {
             background: var(--glass); border: 1px solid var(--border);
-            border-radius: 20px; padding: 35px; transition: 0.4s;
-            position: relative; overflow: hidden;
+            border-radius: 20px; padding: 35px; transition: 0.3s;
+            backdrop-filter: blur(10px);
         }
-        .card:hover { border-color: var(--primary); transform: translateY(-5px); background: rgba(255,42,42,0.01); }
+        .card:hover { border-color: var(--primary); transform: translateY(-5px); }
+
+        .injector-section { width: 90%; max-width: 1000px; margin-bottom: 80px; }
+        .injector-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        
+        .inj-card {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+            border-radius: 15px; padding: 20px; transition: 0.3s;
+        }
+        .inj-card:hover { background: rgba(255,255,255,0.06); }
+
+        .inj-tag { font-size: 0.7rem; padding: 3px 8px; border-radius: 5px; margin-bottom: 10px; display: inline-block; }
+        .tag-safe { background: rgba(0,255,0,0.1); color: #00ff00; }
+        .tag-risk { background: rgba(255,165,0,0.1); color: #ffa500; }
 
         .btn-main {
-            width: 100%; padding: 16px; border: none; border-radius: 12px;
-            background: var(--primary); color: white; font-weight: 800; 
-            cursor: pointer; margin-top: 20px; font-size: 1rem; transition: 0.3s;
+            width: 100%; padding: 15px; border: none; border-radius: 10px;
+            background: var(--primary); color: white; font-weight: bold; cursor: pointer; margin-top: 15px;
+            transition: 0.3s;
         }
-        .btn-main:hover { opacity: 0.9; letter-spacing: 1px; }
+        .btn-main:hover { opacity: 0.8; }
 
-        /* 功能推薦橫幅 */
-        .suggestion-box {
-            width: 85%; max-width: 950px; 
-            background: linear-gradient(90deg, rgba(255,42,42,0.1) 0%, rgba(5,5,5,1) 100%);
-            border: 1px solid var(--border); border-radius: 24px; padding: 40px;
-            margin-bottom: 80px; display: flex; align-items: center; justify-content: space-between;
-            flex-wrap: wrap; gap: 20px;
+        .btn-download {
+            display: block; text-align: center; padding: 10px; background: #222;
+            color: white; text-decoration: none; border-radius: 8px; margin-top: 15px; font-size: 0.9rem;
         }
+        .btn-download:hover { background: var(--primary); }
 
-        .btn-outline {
-            padding: 14px 30px; border: 1px solid var(--primary); background: transparent;
-            color: var(--primary); border-radius: 12px; cursor: pointer; font-weight: bold;
-            text-decoration: none; transition: 0.3s; text-align: center;
-        }
-        .btn-outline:hover { background: var(--primary); color: white; }
+        footer { padding: 50px; color: #444; font-size: 0.8rem; }
 
-        footer { padding-bottom: 50px; color: #222; font-size: 0.8rem; font-weight: bold; }
-
-        /* 提示彈窗 */
         #toast {
             visibility: hidden; background: white; color: black;
-            padding: 14px 35px; position: fixed; bottom: 30px; 
-            border-radius: 50px; font-weight: 900; z-index: 2000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 12px 30px; position: fixed; bottom: 30px; border-radius: 50px; font-weight: bold; z-index: 2000;
         }
         #toast.show { visibility: visible; animation: fIn 0.5s, fOut 0.5s 2s; }
         @keyframes fIn { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
@@ -103,44 +90,58 @@
         <div class="logo">ONI<span>CLUB</span></div>
         <div class="nav-links">
             <a href="#">首頁</a>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSctyDqRANgLvEaop0jQC62SozTvUx2ko8znngPPZKFzuXOfFA/viewform" target="_blank">推薦功能</a>
-            <a href="https://github.com/johnny871012/oni-club" target="_blank">GitHub</a>
+            <a href="#injectors">注入器推薦</a>
+            <a href="https://forms.gle/vPshU9qDsmW1A6tV9" target="_blank">推薦功能</a>
         </div>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSctyDqRANgLvEaop0jQC62SozTvUx2ko8znngPPZKFzuXOfFA/viewform" target="_blank" class="btn-nav">立即投稿</a>
+        <a href="https://forms.gle/vPshU9qDsmW1A6tV9" target="_blank" style="background:var(--primary); color:white; padding:8px 18px; border-radius:8px; text-decoration:none; font-weight:bold;">立即投稿</a>
     </nav>
 
     <header>
         <h1>ONI <span>HUB</span></h1>
-        <p>The Ultimate Script Experience for Roblox Players</p>
+        <p style="color: #666;">Elite Scripts for Roblox Elite</p>
     </header>
 
     <div class="container">
         <div class="card">
-            <h3 style="color:var(--primary); margin:0; font-size: 0.8rem; letter-spacing: 2px;">STABLE</h3>
-            <h2 style="margin: 10px 0;">Official v2.0</h2>
-            <p style="color: #777; font-size: 0.9rem;">最受歡迎的穩定版本，具備全套 Z3US 經典功能。</p>
-            <button class="btn-main" onclick="copy('official')">📋 複製腳本代碼</button>
+            <h3 style="color:var(--primary)">Official v2.0</h3>
+            <p>極致穩定，專為長時間掛機優化。</p>
+            <button class="btn-main" onclick="copy('official')">📋 複製 Official 代碼</button>
         </div>
 
         <div class="card">
-            <h3 style="color:var(--beta-color); margin:0; font-size: 0.8rem; letter-spacing: 2px;">EXPERIMENTAL</h3>
-            <h2 style="margin: 10px 0;">Beta v15.3</h2>
-            <p style="color: #777; font-size: 0.9rem;">最新開發版本，內含 E 鍵傳送與物理跳躍優化。</p>
-            <button class="btn-main" style="background:var(--beta-color); color:black;" onclick="copy('beta')">🚀 複製測試版本</button>
+            <h3 style="color:var(--beta)">Beta v15.3</h3>
+            <p>包含 E 鍵瞬間移動等最新實驗功能。</p>
+            <button class="btn-main" style="background:var(--beta); color:black;" onclick="copy('beta')">🚀 複製 Beta 代碼</button>
         </div>
     </div>
 
-    <div class="suggestion-box">
-        <div>
-            <h2 style="margin:0; font-size: 1.8rem;">想要新功能？</h2>
-            <p style="color:#666; margin: 10px 0 0 0;">加入開發計畫，提交你的點子，我們幫你實現。</p>
+    <div class="injector-section" id="injectors">
+        <h2 style="border-left: 4px solid var(--primary); padding-left: 15px; margin-bottom: 30px;">推薦執行器 (Executors)</h2>
+        <div class="injector-grid">
+            <div class="inj-card">
+                <span class="inj-tag tag-safe">目前最穩</span>
+                <h4 style="margin:5px 0;">Solara</h4>
+                <p style="font-size:0.8rem; color:#888;">Windows 端免費首選，更新速度極快。</p>
+                <a href="https://discord.gg/realsolara" target="_blank" class="btn-download">前往 Discord</a>
+            </div>
+            <div class="inj-card">
+                <span class="inj-tag tag-safe">輕量簡潔</span>
+                <h4 style="margin:5px 0;">Celery</h4>
+                <p style="font-size:0.8rem; color:#888;">介面乾淨，適合不喜歡複雜設定的玩家。</p>
+                <a href="https://discord.gg/celery" target="_blank" class="btn-download">前往 Discord</a>
+            </div>
+            <div class="inj-card">
+                <span class="inj-tag tag-risk">功能強大</span>
+                <h4 style="margin:5px 0;">Wave</h4>
+                <p style="font-size:0.8rem; color:#888;">支援更多高級 Lua 函數，但請注意偵測風險。</p>
+                <a href="https://getwave.gg/" target="_blank" class="btn-download">訪問官網</a>
+            </div>
         </div>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSctyDqRANgLvEaop0jQC62SozTvUx2ko8znngPPZKFzuXOfFA/viewform" target="_blank" class="btn-outline">填寫推薦表單</a>
     </div>
 
-    <footer>© 2026 ONI CLUB TEAM. ALL RIGHTS RESERVED.</footer>
+    <footer>© 2026 ONI CLUB | Always use alt accounts to stay safe.</footer>
 
-    <div id="toast">✅ 代碼已成功複製！</div>
+    <div id="toast">✅ 腳本已複製！</div>
 
     <script>
         function copy(v) {
