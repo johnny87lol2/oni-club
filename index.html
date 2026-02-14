@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONI Club 2.5 | Supreme Utility</title>
+    <style>
+        :root {
+            --primary: #ff2a2a;
+            --bg: #050505;
+            --panel: rgba(15, 15, 15, 0.85);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 頂部裝飾紅光 */
+        .glow {
+            position: absolute;
+            top: -150px;
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 42, 42, 0.15) 0%, rgba(0,0,0,0) 70%);
+            z-index: 0;
+        }
+
+        .main-card {
+            z-index: 1;
+            width: 90%;
+            max-width: 650px;
+            background: var(--panel);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 2px solid var(--primary);
+            border-radius: 16px;
+            padding: 50px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            text-align: center;
+        }
+
+        .logo-area h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            letter-spacing: -2px;
+            background: linear-gradient(to bottom, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-area span {
+            color: var(--primary);
+            text-shadow: 0 0 15px rgba(255, 42, 42, 0.6);
+        }
+
+        .tagline {
+            color: #666;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            margin-bottom: 40px;
+        }
+
+        /* 更新日誌列表 - 數字版 */
+        .log-container {
+            text-align: left;
+            margin-bottom: 40px;
+        }
+
+        .log-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            color: #ccc;
+        }
+
+        .log-num {
+            color: var(--primary);
+            font-weight: bold;
+            margin-right: 15px;
+            min-width: 20px;
+        }
+
+        /* 按鈕樣式 */
+        .copy-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255, 42, 42, 0.3);
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            background: #ff4545;
+            box-shadow: 0 8px 25px rgba(255, 42, 42, 0.5);
+        }
+
+        .copy-btn:active {
+            transform: translateY(1px);
+        }
+
+        footer {
+            margin-top: 30px;
+            color: #333;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        /* 提示框 */
+        #toast {
+            visibility: hidden;
+            min-width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 16px;
+            position: fixed;
+            z-index: 2;
+            bottom: 30px;
+            font-size: 14px;
+        }
+
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+    </style>
+</head>
+<body>
+
+    <div class="glow"></div>
+
+    <div class="main-card">
+        <div class="logo-area">
+            <h1>ONI CLUB <span>2.5</span></h1>
+            <p class="tagline">Z3US STYLE • SUPREME PERFORMANCE</p>
+        </div>
+
+        <div class="log-container">
+            <div class="log-item"><span class="log-num">1</span> 🐍 左上角專屬 ONI Club 2.5 標籤注入。</div>
+            <div class="log-item"><span class="log-num">2</span> 🚀 暴力 Velocity 物理連跳，無視遊戲限制。</div>
+            <div class="log-item"><span class="log-num">3</span> 📍 玩家管理面板整合 E+左鍵傳送開關。</div>
+            <div class="log-item"><span class="log-num">4</span> 🎯 戰鬥模組支援自定義改鍵與動態 FOV。</div>
+            <div class="log-item"><span class="log-num">5</span> 🛸 專業飛行 WASDQE 模式穩定優化。</div>
+        </div>
+
+        <button class="copy-btn" onclick="copyToClipboard()">📋 複製 2.5 BETA 執行腳本</button>
+
+        <footer>EST. 2026 • BY ONI TEAM</footer>
+    </div>
+
+    <div id="toast">✅ 腳本已複製到剪貼簿！</div>
+
+    <script>
+        function copyToClipboard() {
+            // 在這裡放入你腳本的 loadstring 或者原始碼
+            const scriptCode = `_G.ONI_Version = "2.5"\nloadstring(game:HttpGet("你的腳本網址連結"))()`;
+            
+            const tempInput = document.createElement("textarea");
+            tempInput.value = scriptCode;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+    </script>
+</body>
+</html>
