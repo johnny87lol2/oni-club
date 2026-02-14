@@ -3,89 +3,247 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🐍 ONI CLUB | OFFICIAL GATE</title>
+    <title>ONI CLUB | THE NEXT GENERATION</title>
     <style>
-        :root { --primary: #ff2a2a; --beta: #00e1ff; --bg: #080808; }
-        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        
-        .header { text-align: center; margin-bottom: 50px; }
-        .header h1 { font-size: 4rem; margin: 0; letter-spacing: -2px; }
-        .header h1 span { color: var(--primary); text-shadow: 0 0 20px rgba(255,42,42,0.6); }
-        
-        /* 雙版本並排容器 */
-        .version-container { display: flex; gap: 40px; width: 90%; max-width: 1000px; flex-wrap: wrap; justify-content: center; }
-        
-        .box { flex: 1; min-width: 300px; background: rgba(20,20,20,0.8); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 40px; text-align: center; transition: 0.4s; position: relative; }
-        
-        /* 正式版樣式 */
-        .box.stable { border-top: 5px solid var(--primary); }
-        .box.stable:hover { box-shadow: 0 10px 40px rgba(255,42,42,0.2); transform: translateY(-10px); }
-        
-        /* Beta 版樣式 */
-        .box.beta { border-top: 5px solid var(--beta); }
-        .box.beta:hover { box-shadow: 0 10px 40px rgba(0,225,255,0.2); transform: translateY(-10px); }
+        :root {
+            --primary: #ff2a2a;
+            --secondary: #5a0000;
+            --accent: #ff8c00;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
 
-        h2 { font-size: 2rem; margin-bottom: 20px; }
-        .version-tag { font-size: 1rem; padding: 5px 15px; border-radius: 20px; background: rgba(255,255,255,0.1); display: inline-block; margin-bottom: 20px; }
-        
-        .features { text-align: left; margin: 30px 0; min-height: 120px; }
-        .features div { margin-bottom: 10px; color: #bbb; font-size: 0.9rem; }
-        .features div::before { content: "✔"; margin-right: 10px; color: var(--primary); }
-        .beta .features div::before { color: var(--beta); }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            background: radial-gradient(circle at top right, #1a0505, #050505);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-        .copy-btn { width: 100%; padding: 20px; border: none; border-radius: 12px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s; color: white; }
-        .btn-stable { background: var(--primary); box-shadow: 0 5px 15px rgba(255,42,42,0.3); }
-        .btn-beta { background: var(--beta); box-shadow: 0 5px 15px rgba(0,225,255,0.3); }
+        /* 頂部背景動畫 */
+        .bg-glow {
+            position: absolute;
+            top: -150px;
+            width: 100%;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 42, 42, 0.15) 0%, transparent 70%);
+            z-index: -1;
+        }
 
-        .copy-btn:hover { opacity: 0.8; letter-spacing: 1px; }
+        nav {
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-        /* 提示彈窗 */
-        #toast { visibility: hidden; background: #333; color: white; padding: 16px 30px; position: fixed; bottom: 30px; border-radius: 50px; font-weight: bold; z-index: 100; }
-        #toast.show { visibility: visible; animation: fadeInOut 2.5s; }
-        @keyframes fadeInOut { 0% { opacity:0; bottom:0; } 20% { opacity:1; bottom:30px; } 80% { opacity:1; bottom:30px; } 100% { opacity:0; bottom:0; } }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo span { color: var(--primary); }
+
+        header {
+            text-align: center;
+            margin: 80px 0 50px 0;
+        }
+
+        header h1 {
+            font-size: 5rem;
+            margin: 0;
+            background: linear-gradient(to bottom, #fff 30%, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -3px;
+        }
+
+        .status-badge {
+            background: rgba(0, 255, 136, 0.1);
+            color: #00ff88;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* 版本容器 */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            width: 90%;
+            max-width: 1100px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: left;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 42, 42, 0.05), transparent);
+            transform: translateX(-100%);
+            transition: 0.6s;
+        }
+
+        .card:hover::before { transform: translateX(100%); }
+
+        .card h2 { font-size: 2rem; margin: 10px 0; }
+        .card p { color: #888; line-height: 1.6; }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .feature-item i {
+            color: var(--primary);
+            margin-right: 10px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 8px 0 var(--secondary);
+        }
+
+        .btn-primary:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0 var(--secondary);
+        }
+
+        .btn-beta {
+            background: #fff;
+            color: #000;
+        }
+
+        .btn-beta:hover { background: var(--accent); color: white; }
+
+        footer {
+            margin-top: auto;
+            padding: 40px;
+            color: #444;
+            font-size: 0.9rem;
+        }
+
+        #toast {
+            visibility: hidden;
+            background: var(--primary);
+            color: white;
+            padding: 16px 40px;
+            position: fixed;
+            bottom: 30px;
+            border-radius: 12px;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(255, 42, 42, 0.4);
+        }
+
+        #toast.show { visibility: visible; animation: fadeInUp 0.5s, fadeOutDown 0.5s 2.5s; }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeOutDown { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(20px); } }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>ONI CLUB <span>HUB</span></h1>
-        <p style="color: #666; letter-spacing: 4px;">SELECT YOUR VERSION</p>
-    </div>
+    <div class="bg-glow"></div>
 
-    <div class="version-container">
-        <div class="box stable">
-            <div class="version-tag">STABLE</div>
-            <h2 style="color: var(--primary);">Official v2.0</h2>
-            <div class="features">
-                <div>極致穩定的開發架構</div>
-                <div>經典 Z3US 介面系統</div>
-                <div>全功能戰鬥/視覺模組</div>
-            </div>
-            <button class="copy-btn btn-stable" onclick="copyCode('official')">📋 COPY OFFICIAL</button>
+    <nav>
+        <a href="#" class="logo">ONI<span>CLUB</span></a>
+    </nav>
+
+    <header>
+        <div class="status-badge">🟢 UNDETECTED</div>
+        <h1>Power. Performance.</h1>
+        <p style="color: #666; font-size: 1.2rem;">專為菁英玩家打造的 Roblox 輔助套件</p>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h3 style="color: var(--primary); margin: 0;">STABLE</h3>
+            <h2>Official v2.0</h2>
+            <p>適合追求穩定遊玩的玩家。核心代碼經過精密優化，確保低閃退率。</p>
+            <div class="feature-item">✔ Z3US 2.0 專屬介面</div>
+            <div class="feature-item">✔ 全功能 Silent Aim</div>
+            <div class="feature-item">✔ 資源佔用極低</div>
+            <button class="btn btn-primary" onclick="copyCode('official')">Download Official</button>
         </div>
 
-        <div class="box beta">
-            <div class="version-tag">EXPERIMENTAL</div>
-            <h2 style="color: var(--beta);">Beta v15.3</h2>
-            <div class="features">
-                <div>E + Click Teleport (帶獨立開關)</div>
-                <div>物理級 Velocity 無限跳躍</div>
-                <div>最新反作弊偵測繞過優化</div>
-            </div>
-            <button class="copy-btn btn-beta" onclick="copyCode('beta')">🚀 COPY BETA</button>
+        <div class="card">
+            <h3 style="color: var(--accent); margin: 0;">TESTING</h3>
+            <h2>Beta v15.3</h2>
+            <p>搶先體驗最新開發功能。包含實驗性繞過與物理修改模組。</p>
+            <div class="feature-item">✔ E+左鍵 瞬間移動 (開關)</div>
+            <div class="feature-item">✔ 物理級 Velocity 跳躍</div>
+            <div class="feature-item">✔ 定期更新反偵測</div>
+            <button class="btn btn-beta" onclick="copyCode('beta')">Download Beta</button>
         </div>
     </div>
 
-    <div id="toast">✅ 腳本已複製，請在遊戲中執行！</div>
+    <footer>
+        © 2026 ONI CLUB TEAM • DISCORD / GITHUB / OFFICIAL
+    </footer>
+
+    <div id="toast">✅ 代碼已複製！請在執行器中貼上。</div>
 
     <script>
         function copyCode(type) {
             let code = "";
             if (type === 'official') {
-                // 這是你給的 v2.0 連結
                 code = 'loadstring(game:HttpGet("https://pastebin.com/raw/Meh2q7g9"))()';
             } else {
-                // 這是你給的 v15.3 Beta 連結
                 code = 'loadstring(game:HttpGet("https://pastebin.com/raw/KYaGkTXp"))()';
             }
 
@@ -98,7 +256,7 @@
 
             const toast = document.getElementById("toast");
             toast.className = "show";
-            setTimeout(() => { toast.className = ""; }, 2500);
+            setTimeout(() => { toast.className = ""; }, 3000);
         }
     </script>
 </body>
