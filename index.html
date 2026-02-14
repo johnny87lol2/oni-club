@@ -8,6 +8,7 @@
         :root {
             --primary: #ff2a2a;
             --beta: #00e1ff;
+            --xeno: #a855f7; /* Xeno 專屬紫色 */
             --glass: rgba(255, 255, 255, 0.02);
             --border: rgba(255, 255, 255, 0.08);
         }
@@ -55,13 +56,18 @@
         }
 
         .injector-section { width: 90%; max-width: 1000px; margin-bottom: 80px; }
-        .injector-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .injector-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         
         .inj-card {
             background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-            border-radius: 15px; padding: 20px; transition: 0.3s;
+            border-radius: 15px; padding: 25px; transition: 0.3s;
+            position: relative; overflow: hidden;
         }
-        .inj-card:hover { background: rgba(255,255,255,0.06); }
+        .inj-card:hover { border-color: white; background: rgba(255,255,255,0.06); }
+
+        .inj-tag { font-size: 0.7rem; padding: 3px 8px; border-radius: 5px; margin-bottom: 10px; display: inline-block; font-weight: bold; }
+        .tag-safe { background: rgba(0,255,0,0.1); color: #00ff00; }
+        .tag-xeno { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
 
         .btn-main {
             width: 100%; padding: 15px; border: none; border-radius: 10px;
@@ -76,10 +82,10 @@
         .btn-outline:hover { background: var(--primary); color: white; }
 
         .btn-download {
-            display: block; text-align: center; padding: 10px; background: #222;
-            color: white; text-decoration: none; border-radius: 8px; margin-top: 15px; font-size: 0.9rem;
+            display: block; text-align: center; padding: 12px; background: #222;
+            color: white; text-decoration: none; border-radius: 8px; margin-top: 15px; font-size: 0.9rem; font-weight: bold;
         }
-        .btn-download:hover { background: var(--primary); }
+        .btn-download:hover { background: white; color: black; }
 
         footer { padding: 50px; color: #444; font-size: 0.8rem; }
 
@@ -98,7 +104,7 @@
         <div class="logo">ONI<span>CLUB</span></div>
         <div class="nav-links">
             <a href="#">首頁</a>
-            <a href="#injectors">注入器推薦</a>
+            <a href="#injectors">推薦注入器</a>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSctyDqRANgLvEaop0jQC62SozTvUx2ko8znngPPZKFzuXOfFA/viewform?usp=sf_link" target="_blank">推薦功能</a>
         </div>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSctyDqRANgLvEaop0jQC62SozTvUx2ko8znngPPZKFzuXOfFA/viewform?usp=sf_link" target="_blank" style="background:var(--primary); color:white; padding:8px 18px; border-radius:8px; text-decoration:none; font-weight:bold;">立即投稿</a>
@@ -106,7 +112,7 @@
 
     <header>
         <h1>ONI <span>HUB</span></h1>
-        <p style="color: #666;">Elite Scripts for Roblox Elite Players</p>
+        <p style="color: #666;">Ultimate Scripts for Roblox Elite Players</p>
     </header>
 
     <div class="container">
@@ -134,14 +140,24 @@
     <div class="injector-section" id="injectors">
         <h2 style="border-left: 4px solid var(--primary); padding-left: 15px; margin-bottom: 30px;">推薦執行器 (Executors)</h2>
         <div class="injector-grid">
+            <div class="inj-card" style="border-top: 3px solid var(--xeno);">
+                <span class="inj-tag tag-xeno">靈感來源</span>
+                <h4 style="margin:5px 0; color:var(--xeno);">Xeno</h4>
+                <p style="font-size:0.8rem; color:#888;">強大的介面設計與執行能力，是 ONI Club 的風格標竿。</p>
+                <a href="https://xeno.sh/" target="_blank" class="btn-download">訪問 Xeno 官網</a>
+            </div>
+
             <div class="inj-card">
+                <span class="inj-tag tag-safe">目前最穩</span>
                 <h4 style="margin:5px 0;">Solara</h4>
-                <p style="font-size:0.8rem; color:#888;">目前最穩定的免費首選。</p>
+                <p style="font-size:0.8rem; color:#888;">Windows 免費首選，避開 Hyperion 偵測的首選工具。</p>
                 <a href="https://discord.gg/realsolara" target="_blank" class="btn-download">前往 Discord</a>
             </div>
+
             <div class="inj-card">
+                <span class="inj-tag tag-safe">輕量簡潔</span>
                 <h4 style="margin:5px 0;">Celery</h4>
-                <p style="font-size:0.8rem; color:#888;">輕量簡潔，更新迅速。</p>
+                <p style="font-size:0.8rem; color:#888;">極速更新，適合追求簡單操作的玩家。</p>
                 <a href="https://discord.gg/celery" target="_blank" class="btn-download">前往 Discord</a>
             </div>
         </div>
