@@ -28,9 +28,10 @@
             display: flex; justify-content: space-around; align-items: center;
         }
 
-        .logo { font-weight: 900; letter-spacing: 1px; display: flex; align-items: center; gap: 12px; }
+        .logo { font-weight: 900; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
         .logo span { color: var(--primary); }
-        .logo img { height: 40px; filter: drop-shadow(0 0 5px var(--primary)); }
+        /* 修正圖片大小與發光效果 */
+        .logo img { height: 45px; width: auto; filter: drop-shadow(0 0 5px var(--primary)); }
         
         .nav-links a { color: #888; text-decoration: none; margin: 0 15px; font-size: 0.9rem; transition: 0.3s; }
         .nav-links a:hover { color: var(--primary); }
@@ -109,8 +110,7 @@
     <nav>
         <div class="logo">
             <img src="https://i.ibb.co/LhbV0p6z/oni-logo.png" alt="ONI Logo">
-            ONI<span>CLUB</span>
-        </div>
+            ONI<span>CLUB</span> </div>
         <div class="nav-links">
             <a href="#">首頁</a>
             <a href="#injectors">注入器推薦</a>
@@ -133,7 +133,7 @@
 
         <div class="card">
             <h3 style="color:var(--beta)">Beta v28.5</h3>
-            <p>整合無限跳躍、穿牆與雙模式 TP 等最新實驗功能。</p>
+            <p>包含 E 鍵瞬間移動等最新實驗功能。</p>
             <button class="btn-main" style="background:var(--beta); color:black;" onclick="copy('beta')">🚀 複製 Beta v28.5 代碼</button>
         </div>
     </div>
