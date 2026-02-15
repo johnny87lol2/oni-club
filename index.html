@@ -50,14 +50,6 @@
         }
         .card:hover { border-color: var(--primary); transform: translateY(-5px); }
 
-        /* 建議橫幅 */
-        .suggestion-banner {
-            width: 90%; max-width: 1000px; 
-            background: linear-gradient(90deg, rgba(255,42,42,0.15), transparent);
-            border: 1px solid var(--border); border-radius: 20px; padding: 30px;
-            margin-bottom: 60px; display: flex; align-items: center; justify-content: space-between;
-        }
-
         /* 注入器區塊 */
         .injector-section { width: 90%; max-width: 1000px; margin-bottom: 80px; }
         .injector-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
@@ -92,14 +84,45 @@
 
         footer { padding: 50px; color: #444; font-size: 0.8rem; }
 
-        /* 提示視窗 */
+        /* 提示視窗 (Toast) */
         #toast {
             visibility: hidden; background: white; color: black;
-            padding: 12px 30px; position: fixed; bottom: 30px; border-radius: 50px; font-weight: bold; z-index: 2000;
+            padding: 12px 30px; position: fixed; bottom: 30px; border-radius: 50px; font-weight: bold; z-index: 5000;
         }
         #toast.show { visibility: visible; animation: fIn 0.5s, fOut 0.5s 2s; }
         @keyframes fIn { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fOut { from {opacity: 1;} to {opacity: 0;} }
+
+        /* 版本列表樣式 */
+        #version-floating-btn {
+            position: fixed; bottom: 25px; left: 25px;
+            background: rgba(10, 10, 10, 0.8); color: var(--primary);
+            border: 1px solid var(--primary); padding: 12px 20px; border-radius: 12px;
+            font-weight: bold; cursor: pointer; z-index: 2000; backdrop-filter: blur(10px);
+            transition: 0.3s; box-shadow: 0 0 15px rgba(255, 42, 42, 0.1);
+        }
+        #version-floating-btn:hover { background: var(--primary); color: white; box-shadow: 0 0 20px rgba(255, 42, 42, 0.4); }
+
+        .v-modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 3000; justify-content: center; align-items: center;
+            backdrop-filter: blur(8px);
+        }
+        .v-modal {
+            background: #0d0d0d; border: 1px solid var(--border); border-radius: 20px;
+            width: 90%; max-width: 400px; padding: 30px; text-align: center;
+        }
+        .v-list { list-style: none; padding: 0; margin: 25px 0; }
+        .v-item {
+            background: rgba(255,255,255,0.03); padding: 15px; margin: 10px 0;
+            border-radius: 12px; cursor: pointer; border: 1px solid transparent; transition: 0.2s;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .v-item:hover { border-color: var(--primary); background: rgba(255,42,42,0.05); }
+        
+        #confirm-page { display: none; }
+        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-v { flex: 1; padding: 12px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -109,9 +132,8 @@
         <div class="nav-links">
             <a href="#">首頁</a>
             <a href="#injectors">注入器推薦</a>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSctyDqRANgLvEaop0jQC62SozTvUx2ko8znngPPZKFzuXOfFA/viewform?usp=sf_link" target="_blank">推薦功能</a>
         </div>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSctyDqRANgLvEaop0jQC62SozTvUx2ko8znngPPZKFzuXOfFA/viewform?usp=sf_link" target="_blank" style="background:var(--primary); color:white; padding:8px 18px; border-radius:8px; text-decoration:none; font-weight:bold;">立即投稿</a>
+        <a href="#" style="background:var(--primary); color:white; padding:8px 18px; border-radius:8px; text-decoration:none; font-weight:bold;">立即投稿</a>
     </nav>
 
     <header>
@@ -133,12 +155,38 @@
         </div>
     </div>
 
+    <div id="version-floating-btn" onclick="toggleVModal(true)">📁 版本列表</div>
+
+    <div class="v-modal-overlay" id="vOverlay">
+        <div class="v-modal">
+            <div id="list-page">
+                <h2 style="margin:0; color:var(--primary);">歷史版本紀錄</h2>
+                <div class="v-list">
+                    <div class="v-item" onclick="openConfirm('1.0')">
+                        <span>Version 1.0</span>
+                        <span style="color:var(--primary); font-size: 0.8rem;">● 原始版</span>
+                    </div>
+                    </div>
+                <button class="btn-v" style="background:#222; color:white; width:100%;" onclick="toggleVModal(false)">關閉</button>
+            </div>
+
+            <div id="confirm-page">
+                <h2 id="v-title" style="margin:0; color:var(--primary);">複製版本 1.0</h2>
+                <p style="color:#ccc; margin: 20px 0;">確定要複製此版本的原始腳本嗎？</p>
+                <div class="btn-group">
+                    <button class="btn-v" style="background:var(--primary); color:white;" onclick="executeVCopy()">確定複製</button>
+                    <button class="btn-v" style="background:#222; color:white;" onclick="backToVList()">返回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="suggestion-banner">
         <div>
             <h2 style="margin:0;">想要新功能？</h2>
             <p style="color:#888; margin: 5px 0 0 0;">填寫表單告訴我們你的建議。</p>
         </div>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSctyDqRANgLvEaop0jQC62SozTvUx2ko8znngPPZKFzuXOfFA/viewform?usp=sf_link" target="_blank" class="btn-outline">填寫表單</a>
+        <a href="#" class="btn-outline">填寫表單</a>
     </div>
 
     <div class="injector-section" id="injectors">
@@ -147,22 +195,12 @@
             <div class="inj-card" style="border-top: 3px solid var(--xeno);">
                 <span class="inj-tag tag-xeno">官方推薦</span>
                 <h4 style="margin:5px 0; color:var(--xeno);">Xeno</h4>
-                <p style="font-size:0.8rem; color:#888;">強大的介面設計與執行能力，ONI Club 的風格指標。</p>
-                <a href="https://www.xeno.onl/" target="_blank" class="btn-download">訪問官網 (xeno.onl)</a>
+                <a href="https://www.xeno.onl/" target="_blank" class="btn-download">訪問官網</a>
             </div>
-
             <div class="inj-card">
                 <span class="inj-tag tag-safe">目前最穩</span>
                 <h4 style="margin:5px 0;">Solara</h4>
-                <p style="font-size:0.8rem; color:#888;">Windows 免費首選，近期避開偵測最穩定的工具。</p>
                 <a href="https://getsolara.dev/" target="_blank" class="btn-download">訪問官網</a>
-            </div>
-
-            <div class="inj-card">
-                <span class="inj-tag tag-safe">輕量簡潔</span>
-                <h4 style="margin:5px 0;">Bunni</h4>
-                <p style="font-size:0.8rem; color:#888;">強大的介面設計與執行能力UI簡單適合追求簡單操作的低延遲玩家。</p>
-                <a href="https://discord.gg/K8v74APD" target="_blank" class="btn-download">前往 Discord</a>
             </div>
         </div>
     </div>
@@ -172,15 +210,110 @@
     <div id="toast">✅ 腳本已複製！</div>
 
     <script>
+        function showToast(msg) {
+            const t = document.getElementById("toast");
+            t.innerText = msg || "✅ 腳本已複製！";
+            t.className = "show";
+            setTimeout(() => { t.className = ""; }, 2500);
+        }
+
         function copy(v) {
             let c = v === 'official' ? 'loadstring(game:HttpGet("https://pastebin.com/raw/Meh2q7g9"))()' : 'loadstring(game:HttpGet("https://pastebin.com/raw/KYaGkTXp"))()';
             const el = document.createElement('textarea');
             el.value = c; document.body.appendChild(el);
             el.select(); document.execCommand('copy');
             document.body.removeChild(el);
-            const t = document.getElementById("toast");
-            t.className = "show";
-            setTimeout(() => { t.className = ""; }, 2500);
+            showToast();
+        }
+
+        // 版本列表邏輯
+        let selectedV = "";
+
+        function toggleVModal(show) {
+            document.getElementById('vOverlay').style.display = show ? 'flex' : 'none';
+            if(show) backToVList();
+        }
+
+        function openConfirm(v) {
+            selectedV = v;
+            document.getElementById('list-page').style.display = 'none';
+            document.getElementById('confirm-page').style.display = 'block';
+            document.getElementById('v-title').innerText = "版本 " + v;
+        }
+
+        function backToVList() {
+            document.getElementById('list-page').style.display = 'block';
+            document.getElementById('confirm-page').style.display = 'none';
+        }
+
+        function executeVCopy() {
+            let code = "";
+            if(selectedV === '1.0') {
+                // 這裡就是你提供的 V1.0 原始腳本
+                code = `local LP = game.Players.LocalPlayer
+local Char = LP.Character or LP.CharacterAdded:Wait()
+local UIS = game:GetService("UserInputService")
+
+-- UI Setup
+local G = Instance.new("ScreenGui", game.CoreGui)
+local F = Instance.new("Frame", G)
+F.Size, F.Position, F.BackgroundColor3 = UDim2.new(0, 140, 0, 240), UDim2.new(0.1, 0, 0.4, 0), Color3.new(0,0,0)
+F.BorderSizePixel = 2
+F.Visible = true
+
+local L = Instance.new("TextLabel", F)
+L.Size, L.Text, L.TextColor3 = UDim2.new(1, 0, 0, 30), "ONI CLUB", Color3.new(1,0,0)
+L.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
+
+UIS.InputBegan:Connect(function(input, chat)
+    if not chat and input.KeyCode == Enum.KeyCode.RightControl then
+        F.Visible = not F.Visible
+    end
+end)
+
+local function btn(txt, pos, func)
+    local B = Instance.new("TextButton", F)
+    B.Size, B.Position, B.Text = UDim2.new(0.9, 0, 0, 25), UDim2.new(0.05, 0, 0, pos), txt
+    B.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+    B.TextColor3 = Color3.new(1, 1, 1)
+    B.MouseButton1Click:Connect(func)
+end
+
+btn("SPEED", 40, function() Char.Humanoid.WalkSpeed = 100 end)
+btn("NOCLIP", 70, function()
+    _G.nc = not _G.nc
+    game:GetService("RunService").Stepped:Connect(function()
+        if _G.nc and Char then 
+            for _, v in pairs(Char:GetChildren()) do if v:IsA("BasePart") then v.CanCollide = false end end 
+        end
+    end)
+end)
+btn("FLY", 100, function() loadstring(game:HttpGet("https://pastebin.com/raw/7N1Y97pY"))() end)
+btn("ESP", 130, function()
+    for _, v in pairs(game.Players:GetPlayers()) do
+        if v.Character and v ~= LP and not v.Character:FindFirstChild("Highlight") then
+            local h = Instance.new("Highlight", v.Character)
+            h.FillColor = Color3.new(1,0,0)
+        end
+    end
+end)
+btn("TP PLAYER", 160, function()
+    local p = game.Players:GetPlayers()
+    local t = p[math.random(#p)]
+    if t == LP then t = p[#p==1 and 1 or 2] end
+    if t and t.Character then Char.HumanoidRootPart.CFrame = t.Character.HumanoidRootPart.CFrame end
+end)
+btn("RESET/KILL", 190, function() Char.Humanoid.Health = 0 end)
+btn("CLOSE MENU", 220, function() G:Destroy() end)`;
+            }
+            
+            const el = document.createElement('textarea');
+            el.value = code; document.body.appendChild(el);
+            el.select(); document.execCommand('copy');
+            document.body.removeChild(el);
+            
+            toggleVModal(false);
+            showToast("✅ V" + selectedV + " 原始代碼已複製！");
         }
     </script>
 </body>
