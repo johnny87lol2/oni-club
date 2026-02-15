@@ -28,11 +28,8 @@
             display: flex; justify-content: space-around; align-items: center;
         }
 
-        .logo { font-weight: 900; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
+        .logo { font-weight: 900; letter-spacing: 1px; }
         .logo span { color: var(--primary); }
-        /* 修正圖片大小與發光效果 */
-        .logo img { height: 45px; width: auto; filter: drop-shadow(0 0 5px var(--primary)); }
-        
         .nav-links a { color: #888; text-decoration: none; margin: 0 15px; font-size: 0.9rem; transition: 0.3s; }
         .nav-links a:hover { color: var(--primary); }
 
@@ -108,9 +105,7 @@
 <body>
 
     <nav>
-        <div class="logo">
-            <img src="https://i.ibb.co/LhbV0p6z/oni-logo.png" alt="ONI Logo">
-            ONI<span>CLUB</span> </div>
+        <div class="logo">ONI<span>CLUB</span></div>
         <div class="nav-links">
             <a href="#">首頁</a>
             <a href="#injectors">注入器推薦</a>
