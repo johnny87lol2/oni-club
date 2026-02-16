@@ -160,6 +160,11 @@
             <div id="list-page">
                 <h2 style="margin:0; color:var(--primary);">歷史版本紀錄</h2>
                 <div style="margin: 25px 0;">
+                    <div onclick="openConfirm('Beta V27.0')" style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; cursor: pointer; border: 1px solid transparent; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; margin-bottom: 10px;" onmouseover="this.style.borderColor='#00e1ff'" onmouseout="this.style.borderColor='transparent'">
+                        <span>Beta V27.0</span>
+                        <span style="color:var(--beta); font-size: 0.8rem;">● 測試版</span>
+                    </div>
+                    
                     <div onclick="openConfirm('1.0')" style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; cursor: pointer; border: 1px solid transparent; display: flex; justify-content: space-between; align-items: center; transition: 0.2s;" onmouseover="this.style.borderColor='#ff2a2a'" onmouseout="this.style.borderColor='transparent'">
                         <span>Version 1.0</span>
                         <span style="color:var(--primary); font-size: 0.8rem;">● 原始版</span>
@@ -170,7 +175,7 @@
 
             <div id="confirm-page" style="display: none;">
                 <h2 id="v-title" style="margin:0; color:var(--primary);">版本 1.0</h2>
-                <p style="color:#ccc; margin: 20px 0;">確定要複製此版本的原始腳本嗎？</p>
+                <p style="color:#ccc; margin: 20px 0;">確定要複製此版本的腳本代碼嗎？</p>
                 <div style="display: flex; gap: 10px;">
                     <button onclick="executeVCopy()" style="flex: 1; padding: 12px; border-radius: 8px; border: none; background: var(--primary); color: white; font-weight: bold; cursor: pointer;">確定複製</button>
                     <button onclick="backToVList()" style="flex: 1; padding: 12px; border-radius: 8px; border: none; background: #222; color: white; cursor: pointer;">返回</button>
@@ -254,59 +259,18 @@
 
         function executeVCopy() {
             let code = "";
-            if(selectedV === '1.0') {
-                code = `local LP = game.Players.LocalPlayer
-local Char = LP.Character or LP.CharacterAdded:Wait()
-local UIS = game:GetService("UserInputService")
-local G = Instance.new("ScreenGui", game.CoreGui)
-local F = Instance.new("Frame", G)
-F.Size, F.Position, F.BackgroundColor3 = UDim2.new(0, 140, 0, 240), UDim2.new(0.1, 0, 0.4, 0), Color3.new(0,0,0)
-F.BorderSizePixel = 2
-F.Visible = true
-local L = Instance.new("TextLabel", F)
-L.Size, L.Text, L.TextColor3 = UDim2.new(1, 0, 0, 30), "ONI CLUB", Color3.new(1,0,0)
-L.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
-UIS.InputBegan:Connect(function(input, chat)
-    if not chat and input.KeyCode == Enum.KeyCode.RightControl then F.Visible = not F.Visible end
-end)
-local function btn(txt, pos, func)
-    local B = Instance.new("TextButton", F)
-    B.Size, B.Position, B.Text = UDim2.new(0.9, 0, 0, 25), UDim2.new(0.05, 0, 0, pos), txt
-    B.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
-    B.TextColor3 = Color3.new(1, 1, 1)
-    B.MouseButton1Click:Connect(func)
-end
-btn("SPEED", 40, function() Char.Humanoid.WalkSpeed = 100 end)
-btn("NOCLIP", 70, function()
-    _G.nc = not _G.nc
-    game:GetService("RunService").Stepped:Connect(function()
-        if _G.nc and Char then for _, v in pairs(Char:GetChildren()) do if v:IsA("BasePart") then v.CanCollide = false end end end
-    end)
-end)
-btn("FLY", 100, function() loadstring(game:HttpGet("https://pastebin.com/raw/7N1Y97pY"))() end)
-btn("ESP", 130, function()
-    for _, v in pairs(game.Players:GetPlayers()) do
-        if v.Character and v ~= LP and not v.Character:FindFirstChild("Highlight") then
-            local h = Instance.new("Highlight", v.Character)
-            h.FillColor = Color3.new(1,0,0)
-        end
-    end
-end)
-btn("TP PLAYER", 160, function()
-    local p = game.Players:GetPlayers()
-    local t = p[math.random(#p)]
-    if t == LP then t = p[#p==1 and 1 or 2] end
-    if t and t.Character then Char.HumanoidRootPart.CFrame = t.Character.HumanoidRootPart.CFrame end
-end)
-btn("RESET/KILL", 190, function() Char.Humanoid.Health = 0 end)
-btn("CLOSE MENU", 220, function() G:Destroy() end)`;
+            // 新增 Beta V27.0 的複製邏輯
+            if(selectedV === 'Beta V27.0') {
+                code = `loadstring(game:HttpGet("https://pastebin.com/raw/R8pP6uS8"))()`;
+            } else if(selectedV === '1.0') {
+                code = `local LP = game.Players.LocalPlayer\nlocal Char = LP.Character or LP.CharacterAdded:Wait()\nlocal UIS = game:GetService("UserInputService")\nlocal G = Instance.new("ScreenGui", game.CoreGui)\nlocal F = Instance.new("Frame", G)\nF.Size, F.Position, F.BackgroundColor3 = UDim2.new(0, 140, 0, 240), UDim2.new(0.1, 0, 0.4, 0), Color3.new(0,0,0)\nF.BorderSizePixel = 2\nF.Visible = true\nlocal L = Instance.new("TextLabel", F)\nL.Size, L.Text, L.TextColor3 = UDim2.new(1, 0, 0, 30), "ONI CLUB", Color3.new(1,0,0)\nL.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)\nUIS.InputBegan:Connect(function(input, chat)\n    if not chat and input.KeyCode == Enum.KeyCode.RightControl then F.Visible = not F.Visible end\nend)\nlocal function btn(txt, pos, func)\n    local B = Instance.new("TextButton", F)\n    B.Size, B.Position, B.Text = UDim2.new(0.9, 0, 0, 25), UDim2.new(0.05, 0, 0, pos), txt\n    B.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)\n    B.TextColor3 = Color3.new(1, 1, 1)\n    B.MouseButton1Click:Connect(func)\nend\nbtn("SPEED", 40, function() Char.Humanoid.WalkSpeed = 100 end)\nbtn("NOCLIP", 70, function()\n    _G.nc = not _G.nc\n    game:GetService("RunService").Stepped:Connect(function()\n        if _G.nc and Char then for _, v in pairs(Char:GetChildren()) do if v:IsA("BasePart") then v.CanCollide = false end end end\n    end)\nend)\nbtn("FLY", 100, function() loadstring(game:HttpGet("https://pastebin.com/raw/7N1Y97pY"))() end)\nbtn("ESP", 130, function()\n    for _, v in pairs(game.Players:GetPlayers()) do\n        if v.Character and v ~= LP and not v.Character:FindFirstChild("Highlight") then\n            local h = Instance.new("Highlight", v.Character)\n            h.FillColor = Color3.new(1,0,0)\n        end\n    end\nend)\nbtn("TP PLAYER", 160, function()\n    local p = game.Players:GetPlayers()\n    local t = p[math.random(#p)]\n    if t == LP then t = p[#p==1 and 1 or 2] end\n    if t and t.Character then Char.HumanoidRootPart.CFrame = t.Character.HumanoidRootPart.CFrame end\nend)\nbtn("RESET/KILL", 190, function() Char.Humanoid.Health = 0 end)\nbtn("CLOSE MENU", 220, function() G:Destroy() end)`;
             }
             const el = document.createElement('textarea');
             el.value = code; document.body.appendChild(el);
             el.select(); document.execCommand('copy');
             document.body.removeChild(el);
             toggleVModal(false);
-            showToast("✅ V" + selectedV + " 代碼已複製！");
+            showToast("✅ " + selectedV + " 代碼已複製！");
         }
     </script>
 </body>
