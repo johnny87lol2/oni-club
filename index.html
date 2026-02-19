@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+\<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
@@ -19,19 +19,24 @@
             font-family: 'Inter', 'Segoe UI', sans-serif;
             background: radial-gradient(circle at top, #1a0505, #050505); color: white;
             display: flex; flex-direction: column; align-items: center; min-height: 100vh;
-            scroll-behavior: smooth;
+            scroll-behavior: smooth; overflow-x: hidden;
         }
 
+        /* 導航欄 */
         nav {
             width: 100%; padding: 15px 0; border-bottom: 1px solid var(--border);
             backdrop-filter: blur(15px); position: fixed; top: 0; z-index: 1000;
             display: flex; justify-content: space-around; align-items: center;
         }
 
-        .logo { font-weight: 900; letter-spacing: 1px; }
+        .logo { font-weight: 900; letter-spacing: 1px; cursor: pointer; }
         .logo span { color: var(--primary); }
-        .nav-links a { color: #888; text-decoration: none; margin: 0 15px; font-size: 0.9rem; transition: 0.3s; }
+        .nav-links a { color: #888; text-decoration: none; margin: 0 15px; font-size: 0.9rem; transition: 0.3s; cursor: pointer; }
         .nav-links a:hover { color: var(--primary); }
+
+        /* 分頁切換 */
+        .page { width: 100%; display: flex; flex-direction: column; align-items: center; }
+        .hidden { display: none !important; }
 
         header { text-align: center; margin-top: 150px; }
         header h1 { font-size: 4.5rem; margin: 0; letter-spacing: -2px; }
@@ -49,34 +54,7 @@
         }
         .card:hover { border-color: var(--primary); transform: translateY(-5px); }
 
-        /* Credits 區塊樣式 */
-        .credits-section { width: 90%; max-width: 1000px; margin-bottom: 80px; text-align: center; }
-        .credits-card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 20px; overflow: hidden; text-align: left;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .credits-header {
-            padding: 20px 30px; border-bottom: 1px solid var(--border);
-            display: flex; align-items: center; background: rgba(255,255,255,0.02);
-        }
-        .credits-list { list-style: none; margin: 0; padding: 0; }
-        .credit-item {
-            display: flex; align-items: center; padding: 15px 30px;
-            border-bottom: 1px solid rgba(255,255,255,0.03); transition: 0.2s;
-        }
-        .credit-item:hover { background: rgba(255,255,255,0.03); }
-        .c-avatar { width: 65px; }
-        .c-avatar img { width: 48px; height: 48px; border-radius: 12px; border: 1px solid var(--border); object-fit: cover; }
-        .c-info { flex: 1; }
-        .c-name { font-weight: bold; font-size: 1.1rem; }
-        .c-role { color: #777; font-size: 0.85rem; margin-top: 2px; }
-        .c-link a { 
-            color: #fff; text-decoration: none; font-size: 0.8rem; background: #1a1a1a;
-            padding: 8px 16px; border-radius: 6px; transition: 0.3s;
-        }
-        .c-link a:hover { background: var(--primary); }
-
+        /* 建議表單與注入器 (已補回) */
         .suggestion-banner {
             width: 90%; max-width: 1000px; 
             background: linear-gradient(90deg, rgba(255,42,42,0.15), transparent);
@@ -97,34 +75,34 @@
         .tag-xeno { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
         .tag-safe { background: rgba(0,255,0,0.1); color: #00ff00; }
 
-        .btn-main {
-            width: 100%; padding: 15px; border: none; border-radius: 10px;
-            background: var(--primary); color: white; font-weight: bold; cursor: pointer; margin-top: 15px;
-        }
+        /* Credits 區塊樣式 */
+        .credits-section { width: 90%; max-width: 1000px; margin-bottom: 80px; text-align: center; }
+        .credits-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .credits-header { padding: 20px 30px; border-bottom: 1px solid var(--border); display: flex; align-items: center; background: rgba(255,255,255,0.02); }
+        .credit-item { display: flex; align-items: center; padding: 15px 30px; border-bottom: 1px solid rgba(255,255,255,0.03); transition: 0.2s; }
+        .credit-item:hover { background: rgba(255,255,255,0.03); }
+        .c-avatar img { width: 48px; height: 48px; border-radius: 12px; border: 1px solid var(--border); object-fit: cover; }
+        .c-info { flex: 1; margin-left: 15px; }
+        .c-name { font-weight: bold; font-size: 1.1rem; }
+        .c-role { color: #777; font-size: 0.85rem; margin-top: 2px; }
+        .c-link a { color: #fff; text-decoration: none; font-size: 0.8rem; background: #1a1a1a; padding: 8px 16px; border-radius: 6px; transition: 0.3s; }
+        .c-link a:hover { background: var(--primary); }
 
-        .btn-outline {
-            padding: 12px 25px; border: 1px solid var(--primary); background: transparent;
-            color: var(--primary); border-radius: 10px; cursor: pointer; font-weight: bold;
-            text-decoration: none; transition: 0.3s;
-        }
+        /* 功能詳解分頁樣式 */
+        .feature-section { margin-top: 150px; width: 90%; max-width: 800px; margin-bottom: 80px; }
+        .feature-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 40px; }
+        .f-item { margin-bottom: 30px; border-left: 3px solid var(--primary); padding-left: 20px; }
+        .f-item h3 { margin: 0 0 10px 0; color: white; }
+        .f-item p { color: #888; line-height: 1.6; font-size: 0.95rem; }
+
+        /* 按鈕組件 */
+        .btn-main { width: 100%; padding: 15px; border: none; border-radius: 10px; background: var(--primary); color: white; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .btn-outline { padding: 12px 25px; border: 1px solid var(--primary); background: transparent; color: var(--primary); border-radius: 10px; cursor: pointer; font-weight: bold; text-decoration: none; transition: 0.3s; }
         .btn-outline:hover { background: var(--primary); color: white; }
-
-        .btn-download {
-            display: block; text-align: center; padding: 12px; background: #222;
-            color: white; text-decoration: none; border-radius: 8px; margin-top: 15px; font-size: 0.9rem; font-weight: bold;
-        }
+        .btn-download { display: block; text-align: center; padding: 12px; background: #222; color: white; text-decoration: none; border-radius: 8px; margin-top: 15px; font-size: 0.9rem; font-weight: bold; }
         .btn-download:hover { background: white; color: black; }
 
-        footer { padding: 50px; color: #444; font-size: 0.8rem; }
-
-        #toast {
-            visibility: hidden; background: white; color: black;
-            padding: 12px 30px; position: fixed; bottom: 30px; border-radius: 50px; font-weight: bold; z-index: 5000;
-        }
-        #toast.show { visibility: visible; animation: fIn 0.5s, fOut 0.5s 2s; }
-        @keyframes fIn { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
-        @keyframes fOut { from {opacity: 1;} to {opacity: 0;} }
-
+        /* 版本列表左下角按鈕 */
         #version-floating-btn {
             position: fixed; bottom: 25px; left: 25px;
             background: rgba(10, 10, 10, 0.8); color: var(--primary);
@@ -134,130 +112,143 @@
         }
         #version-floating-btn:hover { background: var(--primary); color: white; }
 
+        /* 彈窗 */
         .v-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9); z-index: 4000; justify-content: center; align-items: center;
             backdrop-filter: blur(8px);
         }
-        .v-modal {
-            background: #0d0d0d; border: 1px solid var(--border); border-radius: 20px;
-            width: 90%; max-width: 400px; padding: 30px; text-align: center; color: white;
-        }
+        .v-modal { background: #0d0d0d; border: 1px solid var(--border); border-radius: 20px; width: 90%; max-width: 400px; padding: 30px; text-align: center; color: white; }
+
+        #toast { visibility: hidden; background: white; color: black; padding: 12px 30px; position: fixed; bottom: 30px; border-radius: 50px; font-weight: bold; z-index: 5000; }
+        #toast.show { visibility: visible; animation: fIn 0.5s, fOut 0.5s 2s; }
+        @keyframes fIn { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fOut { from {opacity: 1;} to {opacity: 0;} }
+
+        footer { padding: 50px; color: #444; font-size: 0.8rem; text-align: center; }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">ONI<span>CLUB</span></div>
+        <div class="logo" onclick="switchPage('home')">ONI<span>CLUB</span></div>
         <div class="nav-links">
-            <a href="#">首頁</a>
-            <a href="#injectors">注入器推薦</a>
-            <a href="#credits">開發團隊</a>
+            <a onclick="switchPage('home')">首頁</a>
+            <a onclick="switchPage('features')">功能詳解</a>
+            <a href="#injectors" onclick="switchPage('home')">注入器推薦</a>
+            <a href="#credits" onclick="switchPage('home')">開發團隊</a>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSctyDqRANgLvEaop0jQC62SozTvUx2ko8znngPPZKFzuXOfFA/viewform?usp=sf_link" target="_blank">推薦功能</a>
         </div>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSctyDqRANgLvEaop0jQC62SozTvUx2ko8znngPPZKFzuXOfFA/viewform?usp=sf_link" target="_blank" style="background:var(--primary); color:white; padding:8px 18px; border-radius:8px; text-decoration:none; font-weight:bold;">立即投稿</a>
     </nav>
 
-    <header>
-        <h1>ONI <span>HUB</span></h1>
-        <p style="color: #666;">Ultimate Scripts for Roblox Elite Players</p>
-    </header>
+    <div id="home-page" class="page">
+        <header>
+            <h1>ONI <span>HUB</span></h1>
+            <p style="color: #666;最好的中文腳本Ultimate Scripts for Roblox Elite Players</p>
+        </header>
 
-    <div class="container">
-        <div class="card">
-            <h3 style="color:var(--primary)">Official v3.0</h3>
-            <p>極致穩定，專為長時間掛機優化。</p>
-            <button class="btn-main" onclick="copy('official')">📋 複製 Official 代碼</button>
-        </div>
-
-        <div class="card">
-            <h3 style="color:var(--beta)">Beta v29.6</h3>
-            <p>包含 E 鍵瞬間彈飛人等最新實驗功能。</p>
-            <button class="btn-main" style="background:var(--beta); color:black;" onclick="copy('beta')">🚀 複製 Beta v29.6 代碼</button>
-        </div>
-    </div>
-
-    <div class="credits-section" id="credits">
-        <h2 style="border-left: 4px solid var(--primary); padding-left: 15px; margin-bottom: 30px; text-align: left;">開發團隊 (Credits)</h2>
-        <div class="credits-card">
-            <div class="credits-header">
-                <span style="color:var(--primary); font-weight: bold;">👥 Contributors</span>
-                <span style="margin-left: auto; color: #444; font-size: 12px; letter-spacing: 1px;">LINK</span>
+        <div class="container">
+            <div class="card">
+                <h3 style="color:var(--primary)">Official v3.0</h3>
+                <p>極致穩定，專為長時間掛機優化。</p>
+                <button class="btn-main" onclick="copy('official')">📋 複製 Official 代碼</button>
             </div>
-            <div class="credits-list">
-                <div class="credit-item">
-                    <div class="c-avatar"><img src="https://i.ibb.co/sdT1VR7C/2025-12-06-230525.png"></div>
-                    <div class="c-info">
-                        <div class="c-name">Jayyy</div>
-                        <div class="c-role">👑 Owner of ONI Club</div>
-                    </div>
-                    <div class="c-link"><a href="https://johnny87lol2.github.io/oni-club/" target="_blank">Visit</a></div>
+            <div class="card">
+                <h3 style="color:var(--beta)">Beta v29.6</h3>
+                <p>包含 E 鍵瞬間彈飛人等最新實驗功能。</p>
+                <button class="btn-main" style="background:var(--beta); color:black;" onclick="copy('beta')">🚀 複製 Beta v29.6 代碼</button>
+            </div>
+        </div>
+
+        <div class="suggestion-banner">
+            <div>
+                <h2 style="margin:0;">想要新功能？</h2>
+                <p style="color:#888; margin: 5px 0 0 0;">填寫表單告訴我們你的建議。</p>
+            </div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSctyDqRANgLvEaop0jQC62SozTvUx2ko8znngPPZKFzuXOfFA/viewform?usp=sf_link" target="_blank" class="btn-outline">填寫表單</a>
+        </div>
+
+        <div class="injector-section" id="injectors">
+            <h2 style="border-left: 4px solid var(--primary); padding-left: 15px; margin-bottom: 30px;">推薦執行器 (Executors)</h2>
+            <div class="injector-grid">
+                <div class="inj-card" style="border-top: 3px solid var(--xeno);">
+                    <span class="inj-tag tag-xeno">官方推薦</span>
+                    <h4 style="margin:5px 0; color:var(--xeno);">Xeno</h4>
+                    <p style="font-size:0.8rem; color:#888;">強大的介面設計與執行能力，ONI Club 的風格指標。</p>
+                    <a href="https://www.xeno.onl/" target="_blank" class="btn-download">訪問官網</a>
                 </div>
-                <div class="credit-item">
-                    <div class="c-avatar"><img src="https://i.ibb.co/S76bSMdC/c590f8cc-965e-4081-adc9-e6465cfa661c.jpg"></div>
-                    <div class="c-info">
-                        <div class="c-name">ONI</div>
-                        <div class="c-role">👹 ONI Club Boss</div>
-                    </div>
-                    <div class="c-link"><a href="https://www.roblox.com/users/3042454082/profile" target="_blank">Visit</a></div>
+
+                <div class="inj-card">
+                    <span class="inj-tag tag-safe">目前最穩</span>
+                    <h4 style="margin:5px 0;">Solara</h4>
+                    <p style="font-size:0.8rem; color:#888;">Windows 免費首選，近期避開偵測最穩定的工具。</p>
+                    <a href="https://getsolara.dev/" target="_blank" class="btn-download">訪問官網</a>
                 </div>
-                <div class="credit-item">
-                    <div class="c-avatar"><img src="https://i.ibb.co/TBKFWjJX/636091794-924287340287775-7073204897995937839-n.jpg"></div>
-                    <div class="c-info">
-                        <div class="c-name">Lil C00lBoy2B</div>
-                        <div class="c-role">🔧 ONI Club Contributor</div>
-                    </div>
-                    <div class="c-link"><a href="https://www.roblox.com/users/6062333615/profile" target="_blank">Visit</a></div>
-                </div>
-                <div class="credit-item" style="border-bottom: none;">
-                    <div class="c-avatar"><img src="https://i.ibb.co/s9SRm29N/2026-02-19-001418.png"></div>
-                    <div class="c-info">
-                        <div class="c-name">TTR</div>
-                        <div class="c-role">🔧 ONI Club Contributor</div>
-                    </div>
-                    <div class="c-link"><a href="https://www.roblox.com/users/10515731582/profile" target="_blank">Visit</a></div>
+
+                <div class="inj-card">
+                    <span class="inj-tag tag-safe">輕量簡潔</span>
+                    <h4 style="margin:5px 0;">Bunni</h4>
+                    <p style="font-size:0.8rem; color:#888;">UI簡單適合追求簡單操作的低延遲玩家。</p>
+                    <a href="https://discord.gg/K8v74APD" target="_blank" class="btn-download">前往 Discord</a>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="suggestion-banner">
-        <div>
-            <h2 style="margin:0;">想要新功能？</h2>
-            <p style="color:#888; margin: 5px 0 0 0;">填寫表單告訴我們你的建議。</p>
-        </div>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSctyDqRANgLvEaop0jQC62SozTvUx2ko8znngPPZKFzuXOfFA/viewform?usp=sf_link" target="_blank" class="btn-outline">填寫表單</a>
-    </div>
-
-    <div class="injector-section" id="injectors">
-        <h2 style="border-left: 4px solid var(--primary); padding-left: 15px; margin-bottom: 30px;">推薦執行器 (Executors)</h2>
-        <div class="injector-grid">
-            <div class="inj-card" style="border-top: 3px solid var(--xeno);">
-                <span class="inj-tag tag-xeno">官方推薦</span>
-                <h4 style="margin:5px 0; color:var(--xeno);">Xeno</h4>
-                <p style="font-size:0.8rem; color:#888;">強大的介面設計與執行能力，ONI Club 的風格指標。</p>
-                <a href="https://www.xeno.onl/" target="_blank" class="btn-download">訪問官網</a>
-            </div>
-
-            <div class="inj-card">
-                <span class="inj-tag tag-safe">目前最穩</span>
-                <h4 style="margin:5px 0;">Solara</h4>
-                <p style="font-size:0.8rem; color:#888;">Windows 免費首選，近期避開偵測最穩定的工具。</p>
-                <a href="https://getsolara.dev/" target="_blank" class="btn-download">訪問官網</a>
-            </div>
-
-            <div class="inj-card">
-                <span class="inj-tag tag-safe">輕量簡潔</span>
-                <h4 style="margin:5px 0;">Bunni</h4>
-                <p style="font-size:0.8rem; color:#888;">強大的介面設計與執行能力UI簡單適合追求簡單操作的低延遲玩家。</p>
-                <a href="https://discord.gg/K8v74APD" target="_blank" class="btn-download">前往 Discord</a>
+        <div class="credits-section" id="credits">
+            <h2 style="border-left: 4px solid var(--primary); padding-left: 15px; margin-bottom: 30px; text-align: left;">開發團隊 (Credits)</h2>
+            <div class="credits-card">
+                <div class="credits-header">
+                    <span style="color:var(--primary); font-weight: bold;">👥 Contributors</span>
+                    <span style="margin-left: auto; color: #444; font-size: 12px; letter-spacing: 1px;">LINK</span>
+                </div>
+                <div class="credits-list">
+                    <div class="credit-item">
+                        <div class="c-avatar"><img src="https://i.ibb.co/sdT1VR7C/2025-12-06-230525.png"></div>
+                        <div class="c-info"><div class="c-name">Jayyy</div><div class="c-role">👑 Owner of ONI Club</div></div>
+                        <div class="c-link"><a href="https://johnny87lol2.github.io/oni-club/" target="_blank">Visit</a></div>
+                    </div>
+                    <div class="credit-item">
+                        <div class="c-avatar"><img src="https://i.ibb.co/S76bSMdC/c590f8cc-965e-4081-adc9-e6465cfa661c.jpg"></div>
+                        <div class="c-info"><div class="c-name">ONI</div><div class="c-role">👹 ONI Club Boss</div></div>
+                        <div class="c-link"><a href="https://www.roblox.com/users/3042454082/profile" target="_blank">Visit</a></div>
+                    </div>
+                    <div class="credit-item">
+                        <div class="c-avatar"><img src="https://i.ibb.co/TBKFWjJX/636091794-924287340287775-7073204897995937839-n.jpg"></div>
+                        <div class="c-info"><div class="c-name">Lil C00lBoy2B</div><div class="c-role">🔧 ONI Club Contributor</div></div>
+                        <div class="c-link"><a href="https://www.roblox.com/users/6062333615/profile" target="_blank">Visit</a></div>
+                    </div>
+                    <div class="credit-item" style="border-bottom: none;">
+                        <div class="c-avatar"><img src="https://i.ibb.co/s9SRm29N/2026-02-19-001418.png"></div>
+                        <div class="c-info"><div class="c-name">TTR</div><div class="c-role">🔧 ONI Club Contributor</div></div>
+                        <div class="c-link"><a href="https://www.roblox.com/users/10515731582/profile" target="_blank">Visit</a></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <footer>© 2026 ONI CLUB | Always use alt accounts to stay safe.</footer>
+    <div id="features-page" class="page hidden">
+        <div class="feature-section">
+            <div class="feature-card">
+                <h2 style="color:var(--primary); margin-bottom: 30px;">ONI Club 核心功能說明</h2>
+                <div class="f-item">
+                    <h3>🎯 雙重鎖定系統 (Lock-on)</h3>
+                    <p>支援 <strong>FOV Lock-on</strong> (範圍鎖定) 與 <strong>Nearest Target</strong> (最近目標鎖定)，可根據戰鬥環境隨時切換，確保精準度。</p>
+                </div>
+                <div class="f-item">
+                    <h3>⚡ 快速鍵位控制</h3>
+                    <p>Beta 版支援多種快捷鍵功能（如 E 鍵彈飛），讓你在競技中擁有更快的反應速度。</p>
+                </div>
+                <div class="f-item">
+                    <h3>🛡️ 安全建議</h3>
+                    <p>雖然腳本經過優化，但仍強烈建議使用分身帳號 (Alt accounts) 進行遊戲，以確保主帳號安全。</p>
+                </div>
+                <button class="btn-main" onclick="switchPage('home')">返回首頁</button>
+            </div>
+        </div>
+    </div>
 
-    <div id="toast">✅ 腳本已複製！</div>
     <div id="version-floating-btn" onclick="toggleVModal(true)">📁 版本列表</div>
 
     <div class="v-overlay" id="vOverlay">
@@ -287,7 +278,23 @@
         </div>
     </div>
 
+    <footer>© 2026 ONI CLUB | Always use alt accounts to stay safe.</footer>
+    <div id="toast">✅ 腳本已複製！</div>
+
     <script>
+        function switchPage(pageId) {
+            const home = document.getElementById('home-page');
+            const features = document.getElementById('features-page');
+            if(pageId === 'home') {
+                home.classList.remove('hidden');
+                features.classList.add('hidden');
+            } else {
+                home.classList.add('hidden');
+                features.classList.remove('hidden');
+            }
+            window.scrollTo(0,0);
+        }
+
         function copy(v) {
             let c = v === 'official' ? 'loadstring(game:HttpGet("https://pastebin.com/raw/Meh2q7g9"))()' : 'loadstring(game:HttpGet("https://pastebin.com/raw/KYaGkTXp"))()';
             navigator.clipboard.writeText(c).then(() => showToast());
